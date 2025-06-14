@@ -37,7 +37,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           </div>
           {!isCollapsed && (
             <div>
-              <h1 className="font-bold text-lg">JanSahay</h1>
+              <h1 className="font-bold text-lg">EcoChain</h1>
               <p className="text-sm text-white/70">RecycleFusion</p>
             </div>
           )}
