@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -60,7 +59,7 @@ const Analytics = () => {
       change: '+12.5%',
       trend: 'up',
       icon: Activity,
-      color: 'text-blue-400'
+      color: 'text-blue-600'
     },
     {
       title: 'Issues Resolved',
@@ -68,7 +67,7 @@ const Analytics = () => {
       change: '+8.2%',
       trend: 'up',
       icon: TrendingUp,
-      color: 'text-green-400'
+      color: 'text-green-600'
     },
     {
       title: 'Carbon Footprint Saved',
@@ -76,7 +75,7 @@ const Analytics = () => {
       change: '+15.3%',
       trend: 'up',
       icon: TrendingUp,
-      color: 'text-purple-400'
+      color: 'text-purple-600'
     },
     {
       title: 'Community Ranking',
@@ -84,7 +83,7 @@ const Analytics = () => {
       change: '+3 positions',
       trend: 'up',
       icon: TrendingUp,
-      color: 'text-orange-400'
+      color: 'text-orange-600'
     }
   ];
 
@@ -96,19 +95,23 @@ const Analytics = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-6">
-      <div className="max-w-7xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+      <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
           <div>
-            <h1 className="text-4xl font-bold text-white mb-2">Analytics</h1>
-            <p className="text-purple-200">Track your impact and community engagement metrics</p>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Analytics</h1>
+            <p className="text-base sm:text-lg text-gray-600">Track your impact and community engagement metrics</p>
           </div>
-          <div className="flex gap-3 mt-4 md:mt-0">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             <Button
               variant={timeRange === 'week' ? 'default' : 'outline'}
               onClick={() => setTimeRange('week')}
-              className={timeRange === 'week' ? 'bg-blue-600' : 'bg-gray-700 border-gray-600 text-gray-300'}
+              className={`w-full sm:w-auto font-medium shadow-sm ${
+                timeRange === 'week' 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+              }`}
             >
               <Calendar className="w-4 h-4 mr-2" />
               Weekly
@@ -116,7 +119,11 @@ const Analytics = () => {
             <Button
               variant={timeRange === 'month' ? 'default' : 'outline'}
               onClick={() => setTimeRange('month')}
-              className={timeRange === 'month' ? 'bg-blue-600' : 'bg-gray-700 border-gray-600 text-gray-300'}
+              className={`w-full sm:w-auto font-medium shadow-sm ${
+                timeRange === 'month' 
+                  ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
+                  : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+              }`}
             >
               <BarChart3 className="w-4 h-4 mr-2" />
               Monthly
@@ -125,181 +132,191 @@ const Analytics = () => {
         </div>
 
         {/* Key Stats */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
           {stats.map((stat, index) => (
-            <Card key={index} className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-              <CardContent className="p-6">
+            <Card key={index} className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+              <CardContent className="p-4 sm:p-6">
                 <div className="flex items-center justify-between mb-4">
-                  <stat.icon className={`w-8 h-8 ${stat.color}`} />
-                  <div className={`flex items-center gap-1 text-sm ${
-                    stat.trend === 'up' ? 'text-green-400' : 'text-red-400'
+                  <stat.icon className={`w-6 h-6 sm:w-8 sm:h-8 ${stat.color}`} />
+                  <div className={`flex items-center gap-1 text-xs sm:text-sm font-medium ${
+                    stat.trend === 'up' ? 'text-green-600' : 'text-red-600'
                   }`}>
-                    {stat.trend === 'up' ? <TrendingUp className="w-4 h-4" /> : <TrendingDown className="w-4 h-4" />}
+                    {stat.trend === 'up' ? <TrendingUp className="w-3 h-3 sm:w-4 sm:h-4" /> : <TrendingDown className="w-3 h-3 sm:w-4 sm:h-4" />}
                     {stat.change}
                   </div>
                 </div>
-                <h3 className="text-white text-2xl font-bold mb-1">{stat.value}</h3>
-                <p className="text-gray-400 text-sm">{stat.title}</p>
+                <h3 className="text-gray-900 text-xl sm:text-2xl font-bold mb-1">{stat.value}</h3>
+                <p className="text-gray-600 text-sm font-medium">{stat.title}</p>
               </CardContent>
             </Card>
           ))}
         </div>
 
         {/* Charts Section */}
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6">
           {/* Activity Overview */}
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Activity Overview</CardTitle>
+          <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="text-gray-900 text-lg sm:text-xl">Activity Overview</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  reports: { label: "Reports", color: "#3b82f6" },
-                  recycling: { label: "Recycling", color: "#10b981" },
-                  resolved: { label: "Resolved", color: "#f59e0b" }
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={getCurrentData()}>
-                    <XAxis dataKey={timeRange === 'week' ? 'week' : 'month'} className="text-gray-400" />
-                    <YAxis className="text-gray-400" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="reports" fill="#3b82f6" radius={4} />
-                    <Bar dataKey="recycling" fill="#10b981" radius={4} />
-                    <Bar dataKey="resolved" fill="#f59e0b" radius={4} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              <div className="w-full h-[280px] sm:h-[300px]">
+                <ChartContainer
+                  config={{
+                    reports: { label: "Reports", color: "#3b82f6" },
+                    recycling: { label: "Recycling", color: "#10b981" },
+                    resolved: { label: "Resolved", color: "#f59e0b" }
+                  }}
+                  className="w-full h-full"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={getCurrentData()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                      <XAxis dataKey={timeRange === 'week' ? 'week' : 'month'} className="text-gray-600" fontSize={12} />
+                      <YAxis className="text-gray-600" fontSize={12} />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Bar dataKey="reports" fill="#3b82f6" radius={4} />
+                      <Bar dataKey="recycling" fill="#10b981" radius={4} />
+                      <Bar dataKey="resolved" fill="#f59e0b" radius={4} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
             </CardContent>
           </Card>
 
           {/* Environmental Impact */}
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Environmental Impact</CardTitle>
+          <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="text-gray-900 text-lg sm:text-xl">Environmental Impact</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  carbonSaved: { label: "Carbon Saved (kg)", color: "#10b981" },
-                  pointsEarned: { label: "Points Earned", color: "#3b82f6" }
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <AreaChart data={impactData}>
-                    <XAxis dataKey="date" className="text-gray-400" />
-                    <YAxis className="text-gray-400" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Area 
-                      type="monotone" 
-                      dataKey="carbonSaved" 
-                      stroke="#10b981" 
-                      fill="#10b981" 
-                      fillOpacity={0.3}
-                    />
-                  </AreaChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              <div className="w-full h-[280px] sm:h-[300px]">
+                <ChartContainer
+                  config={{
+                    carbonSaved: { label: "Carbon Saved (kg)", color: "#10b981" },
+                    pointsEarned: { label: "Points Earned", color: "#3b82f6" }
+                  }}
+                  className="w-full h-full"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <AreaChart data={impactData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                      <XAxis dataKey="date" className="text-gray-600" fontSize={12} />
+                      <YAxis className="text-gray-600" fontSize={12} />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Area 
+                        type="monotone" 
+                        dataKey="carbonSaved" 
+                        stroke="#10b981" 
+                        fill="#10b981" 
+                        fillOpacity={0.3}
+                      />
+                    </AreaChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
             </CardContent>
           </Card>
 
           {/* Issue Types Distribution */}
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Issue Types Distribution</CardTitle>
+          <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="text-gray-900 text-lg sm:text-xl">Issue Types Distribution</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  issues: { label: "Issues", color: "#8b5cf6" }
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <PieChart>
-                    <Pie
-                      data={issueTypeData}
-                      cx="50%"
-                      cy="50%"
-                      innerRadius={60}
-                      outerRadius={120}
-                      dataKey="value"
-                    >
-                      {issueTypeData.map((entry, index) => (
-                        <Cell key={`cell-${index}`} fill={entry.color} />
-                      ))}
-                    </Pie>
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                  </PieChart>
-                </ResponsiveContainer>
-              </ChartContainer>
-              <div className="mt-4 space-y-2">
-                {issueTypeData.map((type, index) => (
-                  <div key={index} className="flex items-center justify-between text-sm">
-                    <div className="flex items-center gap-2">
-                      <div 
-                        className="w-3 h-3 rounded-full" 
-                        style={{ backgroundColor: type.color }}
-                      />
-                      <span className="text-gray-300">{type.name}</span>
+              <div className="w-full h-[280px] sm:h-[300px] flex flex-col">
+                <div className="flex-1 min-h-0">
+                  <ChartContainer
+                    config={{
+                      issues: { label: "Issues", color: "#8b5cf6" }
+                    }}
+                    className="w-full h-full"
+                  >
+                    <ResponsiveContainer width="100%" height="100%">
+                      <PieChart margin={{ top: 20, right: 30, left: 20, bottom: 20 }}>
+                        <Pie
+                          data={issueTypeData}
+                          cx="50%"
+                          cy="50%"
+                          innerRadius={50}
+                          outerRadius={100}
+                          dataKey="value"
+                        >
+                          {issueTypeData.map((entry, index) => (
+                            <Cell key={`cell-${index}`} fill={entry.color} />
+                          ))}
+                        </Pie>
+                        <ChartTooltip content={<ChartTooltipContent />} />
+                      </PieChart>
+                    </ResponsiveContainer>
+                  </ChartContainer>
+                </div>
+                <div className="mt-4 space-y-2 flex-shrink-0">
+                  {issueTypeData.map((type, index) => (
+                    <div key={index} className="flex items-center justify-between text-sm">
+                      <div className="flex items-center gap-2">
+                        <div 
+                          className="w-3 h-3 rounded-full shadow-sm flex-shrink-0" 
+                          style={{ backgroundColor: type.color }}
+                        />
+                        <span className="text-gray-700 font-medium">{type.name}</span>
+                      </div>
+                      <span className="text-gray-600 font-medium">{type.value}%</span>
                     </div>
-                    <span className="text-gray-400">{type.value}%</span>
-                  </div>
-                ))}
+                  ))}
+                </div>
               </div>
             </CardContent>
           </Card>
 
           {/* Recycling Breakdown */}
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardHeader>
-              <CardTitle className="text-white">Recycling Breakdown</CardTitle>
+          <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+            <CardHeader className="pb-3 sm:pb-6">
+              <CardTitle className="text-gray-900 text-lg sm:text-xl">Recycling Breakdown</CardTitle>
             </CardHeader>
             <CardContent>
-              <ChartContainer
-                config={{
-                  recycling: { label: "Recycling", color: "#3b82f6" }
-                }}
-                className="h-[300px]"
-              >
-                <ResponsiveContainer width="100%" height="100%">
-                  <BarChart data={recyclingData} layout="horizontal">
-                    <XAxis type="number" className="text-gray-400" />
-                    <YAxis dataKey="type" type="category" className="text-gray-400" />
-                    <ChartTooltip content={<ChartTooltipContent />} />
-                    <Bar dataKey="amount" fill="#3b82f6" radius={4} />
-                  </BarChart>
-                </ResponsiveContainer>
-              </ChartContainer>
+              <div className="w-full h-[280px] sm:h-[300px]">
+                <ChartContainer
+                  config={{
+                    recycling: { label: "Recycling", color: "#3b82f6" }
+                  }}
+                  className="w-full h-full"
+                >
+                  <ResponsiveContainer width="100%" height="100%">
+                    <BarChart data={recyclingData} layout="horizontal" margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                      <XAxis type="number" className="text-gray-600" fontSize={12} />
+                      <YAxis dataKey="type" type="category" className="text-gray-600" fontSize={12} />
+                      <ChartTooltip content={<ChartTooltipContent />} />
+                      <Bar dataKey="amount" fill="#3b82f6" radius={4} />
+                    </BarChart>
+                  </ResponsiveContainer>
+                </ChartContainer>
+              </div>
             </CardContent>
           </Card>
         </div>
 
         {/* Achievement Progress */}
-        <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-white">Achievement Progress</CardTitle>
+        <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-gray-900 text-lg sm:text-xl">Achievement Progress</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-6">
               {achievementProgress.map((achievement, index) => (
-                <div key={index} className="bg-gray-700/30 rounded-lg p-4">
+                <div key={index} className="bg-gray-50 rounded-lg p-4 border border-gray-200 hover:bg-gray-100 hover:border-gray-300 transition-all shadow-sm">
                   <div className="flex items-center justify-between mb-3">
-                    <h3 className="text-white font-semibold">{achievement.name}</h3>
-                    <span className="text-gray-400 text-sm">
+                    <h3 className="text-gray-900 font-semibold text-sm sm:text-base">{achievement.name}</h3>
+                    <span className="text-gray-600 text-sm font-medium">
                       {achievement.current}/{achievement.target}
                     </span>
                   </div>
-                  <div className="w-full bg-gray-600 rounded-full h-2 mb-2">
+                  <div className="w-full bg-gray-200 rounded-full h-2 mb-2 shadow-inner">
                     <div 
-                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300"
+                      className="bg-gradient-to-r from-blue-500 to-purple-500 h-2 rounded-full transition-all duration-300 shadow-sm"
                       style={{ width: `${achievement.percentage}%` }}
                     />
                   </div>
-                  <p className="text-gray-400 text-sm">{achievement.percentage}% complete</p>
+                  <p className="text-gray-600 text-sm font-medium">{achievement.percentage}% complete</p>
                 </div>
               ))}
             </div>
@@ -307,32 +324,34 @@ const Analytics = () => {
         </Card>
 
         {/* Rewards Trend */}
-        <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-          <CardHeader>
-            <CardTitle className="text-white">Points & Rewards Trend</CardTitle>
+        <Card className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
+          <CardHeader className="pb-3 sm:pb-6">
+            <CardTitle className="text-gray-900 text-lg sm:text-xl">Points & Rewards Trend</CardTitle>
           </CardHeader>
           <CardContent>
-            <ChartContainer
-              config={{
-                rewards: { label: "Points Earned", color: "#f59e0b" }
-              }}
-              className="h-[300px]"
-            >
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={getCurrentData()}>
-                  <XAxis dataKey={timeRange === 'week' ? 'week' : 'month'} className="text-gray-400" />
-                  <YAxis className="text-gray-400" />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <Line 
-                    type="monotone" 
-                    dataKey="rewards" 
-                    stroke="#f59e0b" 
-                    strokeWidth={3}
-                    dot={{ fill: "#f59e0b", strokeWidth: 2, r: 6 }}
-                  />
-                </LineChart>
-              </ResponsiveContainer>
-            </ChartContainer>
+            <div className="w-full h-[280px] sm:h-[300px]">
+              <ChartContainer
+                config={{
+                  rewards: { label: "Points Earned", color: "#f59e0b" }
+                }}
+                className="w-full h-full"
+              >
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={getCurrentData()} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                    <XAxis dataKey={timeRange === 'week' ? 'week' : 'month'} className="text-gray-600" fontSize={12} />
+                    <YAxis className="text-gray-600" fontSize={12} />
+                    <ChartTooltip content={<ChartTooltipContent />} />
+                    <Line 
+                      type="monotone" 
+                      dataKey="rewards" 
+                      stroke="#f59e0b" 
+                      strokeWidth={3}
+                      dot={{ fill: "#f59e0b", strokeWidth: 2, r: 6 }}
+                    />
+                  </LineChart>
+                </ResponsiveContainer>
+              </ChartContainer>
+            </div>
           </CardContent>
         </Card>
       </div>
