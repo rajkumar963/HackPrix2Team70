@@ -1,4 +1,3 @@
-
 import React, { useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
@@ -112,29 +111,29 @@ const Notifications = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-6">
-      <div className="max-w-4xl mx-auto space-y-6">
+    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
+      <div className="w-full max-w-4xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
           <div className="flex items-center gap-3">
-            <Bell className="w-8 h-8 text-white" />
+            <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
             <div>
-              <h1 className="text-4xl font-bold text-white mb-1">Notifications</h1>
-              <p className="text-purple-200">Stay updated with your community activities</p>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">Notifications</h1>
+              <p className="text-base sm:text-lg text-gray-600">Stay updated with your community activities</p>
             </div>
           </div>
-          <div className="flex gap-3 mt-4 md:mt-0">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
             {unreadCount > 0 && (
               <Button 
                 onClick={markAllAsRead}
-                className="bg-blue-600 hover:bg-blue-700"
+                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-lg"
               >
                 Mark All Read
               </Button>
             )}
             <Button 
               variant="outline" 
-              className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600"
+              className="w-full sm:w-auto bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 font-medium shadow-sm"
             >
               <Settings className="w-4 h-4 mr-2" />
               Settings
@@ -143,47 +142,47 @@ const Notifications = () => {
         </div>
 
         {/* Notification Summary */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-none">
-          <CardContent className="p-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-none shadow-xl">
+          <CardContent className="p-4 sm:p-6">
+            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-center">
               <div>
-                <p className="text-3xl font-bold text-white">{unreadCount}</p>
-                <p className="text-blue-100 text-sm">Unread</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white">{unreadCount}</p>
+                <p className="text-blue-100 text-xs sm:text-sm font-medium">Unread</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-white">{notifications.length}</p>
-                <p className="text-blue-100 text-sm">Total</p>
+                <p className="text-2xl sm:text-3xl font-bold text-white">{notifications.length}</p>
+                <p className="text-blue-100 text-xs sm:text-sm font-medium">Total</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-white">
+                <p className="text-2xl sm:text-3xl font-bold text-white">
                   {notifications.filter(n => n.type === 'reward').length}
                 </p>
-                <p className="text-blue-100 text-sm">Rewards</p>
+                <p className="text-blue-100 text-xs sm:text-sm font-medium">Rewards</p>
               </div>
               <div>
-                <p className="text-3xl font-bold text-white">
+                <p className="text-2xl sm:text-3xl font-bold text-white">
                   {notifications.filter(n => n.type.includes('issue')).length}
                 </p>
-                <p className="text-blue-100 text-sm">Updates</p>
+                <p className="text-blue-100 text-xs sm:text-sm font-medium">Updates</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Filter Tabs */}
-        <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-          <CardContent className="p-4">
+        <Card className="bg-white border-gray-200 shadow-lg">
+          <CardContent className="p-3 sm:p-4">
             <div className="flex flex-wrap gap-2">
               {filters.map((filterOption) => (
                 <Button
                   key={filterOption.id}
                   variant={filter === filterOption.id ? 'default' : 'outline'}
                   onClick={() => setFilter(filterOption.id)}
-                  className={
+                  className={`font-medium shadow-sm ${
                     filter === filterOption.id
-                      ? 'bg-blue-600 hover:bg-blue-700'
-                      : 'bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600'
-                  }
+                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
+                      : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
+                  }`}
                 >
                   {filterOption.label} ({filterOption.count})
                 </Button>
@@ -193,63 +192,63 @@ const Notifications = () => {
         </Card>
 
         {/* Notifications List */}
-        <div className="space-y-4">
+        <div className="space-y-3 sm:space-y-4">
           {getFilteredNotifications().map((notification) => (
             <Card 
               key={notification.id} 
-              className={`border-gray-700 backdrop-blur-sm transition-all duration-200 hover:shadow-lg ${
+              className={`border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 ${
                 notification.read 
-                  ? 'bg-gray-800/30' 
-                  : 'bg-gray-800/50 border-blue-500/30'
+                  ? 'bg-white' 
+                  : 'bg-blue-50 border-blue-200'
               }`}
             >
-              <CardContent className="p-4">
-                <div className="flex items-start gap-4">
+              <CardContent className="p-3 sm:p-4">
+                <div className="flex items-start gap-3 sm:gap-4">
                   {/* Icon */}
-                  <div className={`p-2 rounded-full ${notification.color} flex-shrink-0`}>
-                    <notification.icon className="w-5 h-5 text-white" />
+                  <div className={`p-2 rounded-full ${notification.color} flex-shrink-0 shadow-md`}>
+                    <notification.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
                   </div>
 
                   {/* Content */}
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-4">
-                      <div className="flex-1">
+                    <div className="flex items-start justify-between gap-3 sm:gap-4">
+                      <div className="flex-1 min-w-0">
                         <div className="flex items-center gap-2 mb-1">
-                          <h3 className={`font-semibold ${
-                            notification.read ? 'text-gray-300' : 'text-white'
+                          <h3 className={`font-semibold text-sm sm:text-base truncate ${
+                            notification.read ? 'text-gray-700' : 'text-gray-900'
                           }`}>
                             {notification.title}
                           </h3>
                           {!notification.read && (
-                            <Badge className="bg-blue-600 text-white text-xs">New</Badge>
+                            <Badge className="bg-blue-600 text-white text-xs font-medium hover:bg-blue-700">New</Badge>
                           )}
                         </div>
-                        <p className={`text-sm mb-2 ${
-                          notification.read ? 'text-gray-400' : 'text-gray-300'
+                        <p className={`text-xs sm:text-sm mb-2 ${
+                          notification.read ? 'text-gray-600' : 'text-gray-700'
                         }`}>
                           {notification.message}
                         </p>
-                        <p className="text-xs text-gray-500">{notification.time}</p>
+                        <p className="text-xs text-gray-500 font-medium">{notification.time}</p>
                       </div>
 
                       {/* Actions */}
-                      <div className="flex gap-2">
+                      <div className="flex gap-1 sm:gap-2 flex-shrink-0">
                         {!notification.read && (
                           <Button 
                             size="sm" 
                             variant="outline"
-                            className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600 h-8 w-8 p-0"
+                            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 h-8 w-8 p-0 shadow-sm"
                           >
-                            <CheckCircle className="w-4 h-4" />
+                            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
                           </Button>
                         )}
                         <Button 
                           size="sm"
                           variant="outline"
                           onClick={() => deleteNotification(notification.id)}
-                          className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-red-600 hover:border-red-600 h-8 w-8 p-0"
+                          className="bg-white border-gray-300 text-gray-700 hover:bg-red-50 hover:border-red-300 hover:text-red-600 h-8 w-8 p-0 shadow-sm"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
                         </Button>
                       </div>
                     </div>
@@ -262,11 +261,11 @@ const Notifications = () => {
 
         {/* Empty State */}
         {getFilteredNotifications().length === 0 && (
-          <Card className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
-            <CardContent className="p-12 text-center">
-              <Bell className="w-16 h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-white text-xl font-semibold mb-2">No notifications found</h3>
-              <p className="text-gray-400">
+          <Card className="bg-white border-gray-200 shadow-lg">
+            <CardContent className="p-8 sm:p-12 text-center">
+              <Bell className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" />
+              <h3 className="text-gray-900 text-lg sm:text-xl font-semibold mb-2">No notifications found</h3>
+              <p className="text-gray-600 text-sm sm:text-base">
                 {filter === 'unread' 
                   ? "You're all caught up! No unread notifications."
                   : "No notifications match your current filter."
