@@ -118,7 +118,7 @@ const Notifications = () => {
           <div className="flex items-center gap-3">
             <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
             <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1">Notifications</h1>
+              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Notifications</h1>
               <p className="text-base sm:text-lg text-gray-600">Stay updated with your community activities</p>
             </div>
           </div>

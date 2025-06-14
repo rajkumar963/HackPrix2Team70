@@ -75,7 +75,7 @@ const Leaderboard = () => {
       <div className="w-full max-w-6xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Leaderboard</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Leaderboard</h1>
           <p className="text-base sm:text-lg text-gray-600">Compete with other community members and climb the ranks!</p>
         </div>
 

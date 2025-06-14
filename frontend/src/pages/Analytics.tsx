@@ -100,7 +100,7 @@ const Analytics = () => {
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
           <div>
-            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Analytics</h1>
+            <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Analytics</h1>
             <p className="text-base sm:text-lg text-gray-600">Track your impact and community engagement metrics</p>
           </div>
           <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
