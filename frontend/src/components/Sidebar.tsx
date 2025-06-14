@@ -30,13 +30,20 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     )}>
       {/* Header */}
       <div className="p-4 border-b border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-blue-500 to-purple-600 rounded-xl flex items-center justify-center text-white font-bold text-lg">
-            ⚡
-          </div>
+  <div className="flex items-center gap-3">
+    <div className="w-11 h-11 bg-gradient-to-br from-blue-500 to-green-600 rounded-xl flex items-center justify-center p-1">
+      <a href="/">
+        <img
+          src="/apple-touch-icon.png"
+          alt="EcoChain Icon"
+          className="w-full h-full rounded-xl object-cover"
+        />
+      </a>
+    </div>
+
           {!isCollapsed && (
             <div>
-              <Link to='/' className="font-bold text-lg">JanSahay</Link>
+              <Link to='/' className="font-bold text-lg">EcoChain</Link>
               <p className="text-sm text-white/70">RecycleFusion</p>
             </div>
           )}
