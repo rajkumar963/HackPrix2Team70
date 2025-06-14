@@ -18,7 +18,6 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
     { icon: '🎁', label: 'Recycling Rewards', path: '/recycling-rewards' },
     { icon: '🗺️', label: 'Issue Map', path: '/issue-map' },
     { icon: '🏆', label: 'Leaderboard', path: '/leaderboard' },
-    { icon: '💰', label: 'Wallet Integration', path: '/wallet-integration' },
     { icon: '👤', label: 'Profile', path: '/profile' },
     { icon: '🔔', label: 'Notifications', path: '/notifications' },
     { icon: '📈', label: 'Analytics', path: '/analytics' },
@@ -37,7 +36,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
           </div>
           {!isCollapsed && (
             <div>
-              <h1 className="font-bold text-lg">EcoChain</h1>
+              <Link to='/' className="font-bold text-lg">JanSahay</Link>
               <p className="text-sm text-white/70">RecycleFusion</p>
             </div>
           )}
@@ -45,7 +44,7 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 p-3 space-y-2">
+      <div className="flex-1 ps-3 ">
         {navigationItems.map((item, index) => {
           const isActive = location.pathname === item.path;
           
@@ -70,22 +69,25 @@ const Sidebar: React.FC<SidebarProps> = ({ isCollapsed, onToggle }) => {
 
       {/* User Profile */}
       <div className="p-4 border-t border-white/10">
-        <div className="flex items-center gap-3">
-          <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
-            <span className="text-sm font-bold">JD</span>
-          </div>
-          {!isCollapsed && (
-            <div className="flex-1">
-              <p className="font-medium text-sm">John Doe</p>
-              <p className="text-xs text-white/60">john@example.com</p>
+         <Link to="/profile" className="font-medium text-white/90">
+          <div className="flex items-center gap-3">
+            <div className="w-10 h-10 bg-gradient-to-br from-orange-400 to-pink-500 rounded-full flex items-center justify-center">
+              <span className="text-sm font-bold">JD</span>
             </div>
-          )}
-          {!isCollapsed && (
-            <button className="p-1 hover:bg-white/10 rounded">
-              <span className="text-white/60">⚙️</span>
-            </button>
-          )}
-        </div>
+            {!isCollapsed && (
+              <div className="flex-1">
+                  <p className="font-medium text-sm">John Doe</p>
+                  <p className="text-xs text-white/60">john@example.com</p>
+                
+              </div>
+            )}
+            {!isCollapsed && (  
+              <button className="p-1 hover:bg-white/10 rounded">
+                <span className="text-white/60">⚙️</span>
+              </button>
+            )}
+          </div>
+         </Link>
       </div>
 
       {/* Toggle Button */}
