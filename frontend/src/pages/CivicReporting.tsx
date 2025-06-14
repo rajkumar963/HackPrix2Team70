@@ -81,7 +81,7 @@ const CivicReporting = () => {
       <div className="max-w-7xl mx-auto">
         {/* Header */}
         <div className="mb-8 space-x-auto text-center ">
-          <h1 className="text-4xl font-bold text-gray-900 mb-2">Civic Reporting</h1>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Civic Reporting</h1>
           <p className="text-gray-600">Report civic issues in your community and track their resolution.</p>
         </div>
 

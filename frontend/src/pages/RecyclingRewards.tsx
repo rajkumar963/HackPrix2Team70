@@ -36,7 +36,7 @@ const RecyclingRewards = () => {
       <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
         {/* Header */}
         <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2">Recycling Rewards</h1>
+          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Recycling Rewards</h1>
           <p className="text-base sm:text-lg text-gray-600">Earn points by recycling and redeem amazing rewards!</p>
         </div>
 
