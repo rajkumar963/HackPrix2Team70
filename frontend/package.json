@@ -46,6 +46,7 @@
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",
     "cmdk": "^1.0.0",
+    "daisyui": "^5.0.43",
     "date-fns": "^3.6.0",
     "embla-carousel-react": "^8.3.0",
     "gsap": "^3.13.0",
@@ -70,8 +71,8 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.9.0",
-    "@tailwindcss/typography": "^0.5.15",
-    "@types/node": "^22.5.5",
+    "@tailwindcss/typography": "^0.5.16",
+    "@types/node": "^22.15.31",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@types/react-redux": "^7.1.34",

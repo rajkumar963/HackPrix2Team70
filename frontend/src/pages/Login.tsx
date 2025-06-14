@@ -4,17 +4,16 @@ import { z } from 'zod';
 import { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { AppDispatch, RootState } from '../store/store'; // Update path to your store file
+import { AppDispatch, RootState } from '../store/store';
 import { loginUser } from '../authSlice';
 
-// Zod schema
-const signupSchema = z.object({
-  emailId: z.string().email("Invalid Email"),
-  password: z.string().min(8, "Password is too weak"),
+// ✅ Zod schema for validation
+const schema = z.object({
+  emailId: z.string().email('Invalid Email'),
+  password: z.string().min(8, 'Password is too weak'),
 });
 
-// Inferred TypeScript type from schema
-type LoginFormValues = z.infer<typeof signupSchema>;
+type LoginFormValues = z.infer<typeof schema>;
 
 function Login() {
   const dispatch = useDispatch<AppDispatch>();
@@ -28,7 +27,7 @@ function Login() {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<LoginFormValues>({ resolver: zodResolver(signupSchema) });
+  } = useForm<LoginFormValues>({ resolver: zodResolver(schema) });
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -41,53 +40,86 @@ function Login() {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4">
-      <div className="card w-96 bg-base-100 shadow-xl">
-        <div className="card-body">
-          <h2 className="card-title justify-center text-3xl">Leetcode</h2>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <div className="form-control mt-4">
-              <label className="label mb-1">
-                <span className="label-text">Email</span>
-              </label>
-              <input
-                type="email"
-                placeholder="john@example.com"
-                className={`input input-bordered ${errors.emailId ? 'input-error' : ''}`}
-                {...register('emailId')}
-              />
-              {errors.emailId && (
-                <span className="text-error">{errors.emailId.message}</span>
-              )}
-            </div>
-
-            <div className="form-control mt-4">
-              <label className="label mb-1">
-                <span className="label-text">Password</span>
-              </label>
-              <input
-                type="password"
-                placeholder="••••••••"
-                className={`input input-bordered ${errors.password ? 'input-error' : ''}`}
-                {...register('password')}
-              />
-              {errors.password && (
-                <span className="text-error">{errors.password.message}</span>
-              )}
-            </div>
-
-            <div className="form-control mt-6 flex justify-center">
-              <button
-                type="submit"
-                className="btn btn-primary"
-                disabled={loading}
-              >
-                {loading ? 'Logging in...' : 'Login'}
-              </button>
-            </div>
-            {error && <p className="text-error text-center mt-2">{error}</p>}
-          </form>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100  p-4">
+      <div className="bg-white rounded-xl w-full max-w-md p-6 shadow-lg">
+        {/* Close (X) Button */}
+        <div className="flex justify-end">
+          <button
+            onClick={() => navigate(-1)}
+            className="text-gray-400 hover:text-gray-600 text-xl font-bold"
+          >
+            ×
+          </button>
         </div>
+
+        {/* Header */}
+        <h2 className="text-2xl font-semibold text-center mb-6">Login As User</h2>
+
+        {/* Form */}
+        <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+          {/* Email Field */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Email</label>
+            <input
+              type="email"
+              placeholder="john.doe@example.com"
+              className={`w-full px-4 py-2 border bg-white rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                errors.emailId ? 'border-red-500' : 'border-green-300'
+              }`}
+              {...register('emailId')}
+            />
+            {errors.emailId && (
+              <p className="text-sm text-red-500 mt-1">{errors.emailId.message}</p>
+            )}
+          </div>
+
+          {/* Password Field */}
+          <div>
+            <label className="block text-sm font-medium mb-1">Password</label>
+            <input
+              type="password"
+              placeholder="••••••••"
+              className={`w-full px-4 py-2 border rounded-lg bg-white focus:outline-none focus:ring-2 focus:ring-green-500 ${
+                errors.password ? 'border-red-500' : 'border-gray-300'
+              }`}
+              {...register('password')}
+            />
+            {errors.password && (
+              <p className="text-sm text-red-500 mt-1">{errors.password.message}</p>
+            )}
+          </div>
+
+          {/* Submit Button */}
+          <button
+            type="submit"
+            className="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 rounded-lg transition duration-300"
+            disabled={loading}
+          >
+            {loading ? 'Logging in...' : 'Login'}
+          </button>
+
+          {/* Error Message */}
+          {error && <p className="text-sm text-red-500 text-center">{error}</p>}
+        </form>
+
+        {/* Sign Up Redirect */}
+        <div className="text-center mt-4 text-sm">
+          Don&apos;t have an account?{' '}
+          <span
+            onClick={() => navigate('/signup')}
+            className="text-green-600 font-medium hover:underline cursor-pointer"
+          >
+            Sign up
+          </span>
+        </div>
+
+        {/* Back Button */}
+        <button
+          onClick={() => navigate(-1)}
+          className="mt-4 w-full py-2 border border-gray-300 rounded-lg text-gray-700 hover:bg-gray-100 transition"
+        >
+          Back
+        </button>
       </div>
     </div>
   );
