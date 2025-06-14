@@ -1,13 +1,22 @@
-import React, { useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
-import { Bell, Settings, CheckCircle, AlertTriangle, Gift, MapPin, Users, Trash2 } from 'lucide-react';
+
+import React, { useState, useEffect, useRef } from 'react';
+import { AlertTriangle, Gift, CheckCircle, Users, MapPin, Settings } from 'lucide-react';
+import { gsap } from 'gsap';
+import { NotificationHeader } from '@/components/notifications/NotificationHeader';
+import { NotificationSummary } from '@/components/notifications/NotificationSummary';
+import { NotificationFilters } from '@/components/notifications/NotificationFilters';
+import { NotificationsList } from '@/components/notifications/NotificationsList';
+import { NotificationItem } from '@/components/notifications/NotificationCard';
 
 const Notifications = () => {
   const [filter, setFilter] = useState('all');
+  const headerRef = useRef<HTMLDivElement>(null);
+  const summaryRef = useRef<HTMLDivElement>(null);
+  const filtersRef = useRef<HTMLDivElement>(null);
+  const notificationsRef = useRef<HTMLDivElement>(null);
+  const notificationCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
-  const notifications = [
+  const notifications: NotificationItem[] = [
     {
       id: 1,
       type: 'report_update',
@@ -87,20 +96,9 @@ const Notifications = () => {
     { id: 'reports', label: 'Reports', count: notifications.filter(n => n.type.includes('report') || n.type.includes('issue')).length }
   ];
 
-  const getFilteredNotifications = () => {
-    switch (filter) {
-      case 'unread':
-        return notifications.filter(n => !n.read);
-      case 'rewards':
-        return notifications.filter(n => n.type === 'reward');
-      case 'reports':
-        return notifications.filter(n => n.type.includes('report') || n.type.includes('issue'));
-      default:
-        return notifications;
-    }
-  };
-
   const unreadCount = notifications.filter(n => !n.read).length;
+  const rewardsCount = notifications.filter(n => n.type === 'reward').length;
+  const updatesCount = notifications.filter(n => n.type.includes('issue')).length;
 
   const markAllAsRead = () => {
     // Logic to mark all notifications as read
@@ -110,170 +108,96 @@ const Notifications = () => {
     // Logic to delete notification
   };
 
+  // Initial page animations
+  useEffect(() => {
+    const tl = gsap.timeline();
+    
+    // Header animation
+    tl.fromTo(headerRef.current,
+      { y: -50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+    );
+
+    // Summary card animation
+    tl.fromTo(summaryRef.current,
+      { scale: 0.9, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+      "-=0.4"
+    );
+
+    // Filters animation
+    tl.fromTo(filtersRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+      "-=0.3"
+    );
+
+    // Notifications list animation
+    tl.fromTo(notificationsRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+      "-=0.2"
+    );
+
+    // Stagger notification cards
+    tl.fromTo(notificationCardsRef.current,
+      { x: -30, opacity: 0 },
+      { 
+        x: 0, 
+        opacity: 1, 
+        duration: 0.4, 
+        stagger: 0.1, 
+        ease: "power2.out" 
+      },
+      "-=0.3"
+    );
+  }, []);
+
+  // Filter change animation
+  useEffect(() => {
+    gsap.fromTo(notificationCardsRef.current,
+      { opacity: 0, y: 20 },
+      { 
+        opacity: 1, 
+        y: 0, 
+        duration: 0.3, 
+        stagger: 0.05, 
+        ease: "power2.out" 
+      }
+    );
+  }, [filter]);
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
-      <div className="w-full max-w-4xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
-        {/* Header */}
-        <div className="flex flex-col md:flex-row md:items-center md:justify-between space-y-4 md:space-y-0">
-          <div className="flex items-center gap-3">
-            <Bell className="w-6 h-6 sm:w-8 sm:h-8 text-blue-600" />
-            <div>
-              <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-1 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Notifications</h1>
-              <p className="text-base sm:text-lg text-gray-600">Stay updated with your community activities</p>
-            </div>
-          </div>
-          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3">
-            {unreadCount > 0 && (
-              <Button 
-                onClick={markAllAsRead}
-                className="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-medium shadow-lg"
-              >
-                Mark All Read
-              </Button>
-            )}
-            <Button 
-              variant="outline" 
-              className="w-full sm:w-auto bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 font-medium shadow-sm"
-            >
-              <Settings className="w-4 h-4 mr-2" />
-              Settings
-            </Button>
-          </div>
-        </div>
+    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-6">
+      <div className="max-w-4xl mx-auto space-y-6">
+        <NotificationHeader
+          unreadCount={unreadCount}
+          onMarkAllAsRead={markAllAsRead}
+          headerRef={headerRef}
+        />
 
-        {/* Notification Summary */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-none shadow-xl">
-          <CardContent className="p-4 sm:p-6">
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4 text-center">
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-white">{unreadCount}</p>
-                <p className="text-blue-100 text-xs sm:text-sm font-medium">Unread</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-white">{notifications.length}</p>
-                <p className="text-blue-100 text-xs sm:text-sm font-medium">Total</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-white">
-                  {notifications.filter(n => n.type === 'reward').length}
-                </p>
-                <p className="text-blue-100 text-xs sm:text-sm font-medium">Rewards</p>
-              </div>
-              <div>
-                <p className="text-2xl sm:text-3xl font-bold text-white">
-                  {notifications.filter(n => n.type.includes('issue')).length}
-                </p>
-                <p className="text-blue-100 text-xs sm:text-sm font-medium">Updates</p>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
+        <NotificationSummary
+          unreadCount={unreadCount}
+          totalCount={notifications.length}
+          rewardsCount={rewardsCount}
+          updatesCount={updatesCount}
+          summaryRef={summaryRef}
+        />
 
-        {/* Filter Tabs */}
-        <Card className="bg-white border-gray-200 shadow-lg">
-          <CardContent className="p-3 sm:p-4">
-            <div className="flex flex-wrap gap-2">
-              {filters.map((filterOption) => (
-                <Button
-                  key={filterOption.id}
-                  variant={filter === filterOption.id ? 'default' : 'outline'}
-                  onClick={() => setFilter(filterOption.id)}
-                  className={`font-medium shadow-sm ${
-                    filter === filterOption.id
-                      ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg'
-                      : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-                  }`}
-                >
-                  {filterOption.label} ({filterOption.count})
-                </Button>
-              ))}
-            </div>
-          </CardContent>
-        </Card>
+        <NotificationFilters
+          filters={filters}
+          activeFilter={filter}
+          onFilterChange={setFilter}
+          filtersRef={filtersRef}
+        />
 
-        {/* Notifications List */}
-        <div className="space-y-3 sm:space-y-4">
-          {getFilteredNotifications().map((notification) => (
-            <Card 
-              key={notification.id} 
-              className={`border-gray-200 shadow-lg hover:shadow-xl transition-all duration-200 ${
-                notification.read 
-                  ? 'bg-white' 
-                  : 'bg-blue-50 border-blue-200'
-              }`}
-            >
-              <CardContent className="p-3 sm:p-4">
-                <div className="flex items-start gap-3 sm:gap-4">
-                  {/* Icon */}
-                  <div className={`p-2 rounded-full ${notification.color} flex-shrink-0 shadow-md`}>
-                    <notification.icon className="w-4 h-4 sm:w-5 sm:h-5 text-white" />
-                  </div>
-
-                  {/* Content */}
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-start justify-between gap-3 sm:gap-4">
-                      <div className="flex-1 min-w-0">
-                        <div className="flex items-center gap-2 mb-1">
-                          <h3 className={`font-semibold text-sm sm:text-base truncate ${
-                            notification.read ? 'text-gray-700' : 'text-gray-900'
-                          }`}>
-                            {notification.title}
-                          </h3>
-                          {!notification.read && (
-                            <Badge className="bg-blue-600 text-white text-xs font-medium hover:bg-blue-700">New</Badge>
-                          )}
-                        </div>
-                        <p className={`text-xs sm:text-sm mb-2 ${
-                          notification.read ? 'text-gray-600' : 'text-gray-700'
-                        }`}>
-                          {notification.message}
-                        </p>
-                        <p className="text-xs text-gray-500 font-medium">{notification.time}</p>
-                      </div>
-
-                      {/* Actions */}
-                      <div className="flex gap-1 sm:gap-2 flex-shrink-0">
-                        {!notification.read && (
-                          <Button 
-                            size="sm" 
-                            variant="outline"
-                            className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400 h-8 w-8 p-0 shadow-sm"
-                          >
-                            <CheckCircle className="w-3 h-3 sm:w-4 sm:h-4" />
-                          </Button>
-                        )}
-                        <Button 
-                          size="sm"
-                          variant="outline"
-                          onClick={() => deleteNotification(notification.id)}
-                          className="bg-white border-gray-300 text-gray-700 hover:bg-red-50 hover:border-red-300 hover:text-red-600 h-8 w-8 p-0 shadow-sm"
-                        >
-                          <Trash2 className="w-3 h-3 sm:w-4 sm:h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-
-        {/* Empty State */}
-        {getFilteredNotifications().length === 0 && (
-          <Card className="bg-white border-gray-200 shadow-lg">
-            <CardContent className="p-8 sm:p-12 text-center">
-              <Bell className="w-12 h-12 sm:w-16 sm:h-16 text-gray-400 mx-auto mb-4" />
-              <h3 className="text-gray-900 text-lg sm:text-xl font-semibold mb-2">No notifications found</h3>
-              <p className="text-gray-600 text-sm sm:text-base">
-                {filter === 'unread' 
-                  ? "You're all caught up! No unread notifications."
-                  : "No notifications match your current filter."
-                }
-              </p>
-            </CardContent>
-          </Card>
-        )}
+        <NotificationsList
+          notifications={notifications}
+          filter={filter}
+          onDelete={deleteNotification}
+          notificationsRef={notificationsRef}
+          notificationCardsRef={notificationCardsRef}
+        />
       </div>
     </div>
   );

@@ -1,11 +1,18 @@
-import React, { useState } from 'react';
+
+import React, { useState, useEffect, useRef } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
-import { Gift, Coins, Star, ShoppingBag, Coffee, Fuel, Award } from 'lucide-react';
+import { Gift, Coins, Star, Award } from 'lucide-react';
+import { gsap } from 'gsap';
 
 const RecyclingRewards = () => {
   const [activeTab, setActiveTab] = useState('rewards');
+  const headerRef = useRef<HTMLDivElement>(null);
+  const balanceCardRef = useRef<HTMLDivElement>(null);
+  const tabsRef = useRef<HTMLDivElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
+  const rewardCardsRef = useRef<(HTMLDivElement | null)[]>([]);
 
   const rewards = [
     { id: 1, title: 'Shopping Voucher', value: '₹500', points: 500, image: '🛍️', category: 'Shopping', available: true },
@@ -31,50 +38,107 @@ const RecyclingRewards = () => {
     { title: 'Glass Master', description: 'Recycled 100 glass items', icon: '🥤', earned: false }
   ];
 
+  // Initial page animations
+  useEffect(() => {
+    const tl = gsap.timeline();
+    
+    // Header animation
+    tl.fromTo(headerRef.current,
+      { y: -50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.8, ease: "power2.out" }
+    );
+
+    // Balance card animation
+    tl.fromTo(balanceCardRef.current,
+      { scale: 0.8, opacity: 0 },
+      { scale: 1, opacity: 1, duration: 0.6, ease: "back.out(1.7)" },
+      "-=0.4"
+    );
+
+    // Tab navigation animation
+    tl.fromTo(tabsRef.current,
+      { y: 30, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" },
+      "-=0.3"
+    );
+
+    // Content animation
+    tl.fromTo(contentRef.current,
+      { y: 50, opacity: 0 },
+      { y: 0, opacity: 1, duration: 0.6, ease: "power2.out" },
+      "-=0.2"
+    );
+  }, []);
+
+  // Tab change animations
+  useEffect(() => {
+    gsap.fromTo(contentRef.current,
+      { opacity: 0, y: 20 },
+      { opacity: 1, y: 0, duration: 0.4, ease: "power2.out" }
+    );
+  }, [activeTab]);
+
+  // Reward card hover animations
+  const handleCardHover = (index: number, isHovering: boolean) => {
+    const card = rewardCardsRef.current[index];
+    if (!card) return;
+
+    if (isHovering) {
+      gsap.to(card, {
+        scale: 1.05,
+        y: -10,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    } else {
+      gsap.to(card, {
+        scale: 1,
+        y: 0,
+        duration: 0.3,
+        ease: "power2.out"
+      });
+    }
+  };
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
-      <div className="w-full max-w-7xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-100 via-white to-green-100 dark:from-blue-900/80 dark:via-background dark:to-green-900/80 p-6">
+      <div className="max-w-7xl mx-auto space-y-6">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Recycling Rewards</h1>
-          <p className="text-base sm:text-lg text-gray-600">Earn points by recycling and redeem amazing rewards!</p>
+        <div ref={headerRef} className="text-center mb-8">
+          <h1 className="text-4xl font-bold text-foreground mb-2">Recycling Rewards</h1>
+          <p className="text-muted-foreground">Earn points by recycling and redeem amazing rewards!</p>
         </div>
 
         {/* Points Balance */}
-        <Card className="bg-gradient-to-r from-green-500 to-blue-600 border-none shadow-xl">
-          <CardContent className="p-6 sm:p-8 text-center">
+        <Card ref={balanceCardRef} className="bg-gradient-to-r from-green-600 to-blue-600 border-none">
+          <CardContent className="p-8 text-center">
             <div className="flex items-center justify-center gap-2 mb-4">
-              <Coins className="w-6 h-6 sm:w-8 sm:h-8 text-yellow-300" />
-              <h2 className="text-2xl sm:text-3xl font-bold text-white">2,450 Points</h2>
+              <Coins className="w-8 h-8 text-yellow-300" />
+              <h2 className="text-3xl font-bold text-white">2,450 Points</h2>
             </div>
-            <p className="text-green-100 mb-4 sm:mb-6 text-sm sm:text-base">Available Balance</p>
-            <div className="grid grid-cols-3 gap-3 sm:gap-4 text-center">
+            <p className="text-green-100 mb-4">Available Balance</p>
+            <div className="grid grid-cols-3 gap-4 text-center">
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-white">892</p>
-                <p className="text-green-100 text-xs sm:text-sm">Items Recycled</p>
+                <p className="text-2xl font-bold text-white">892</p>
+                <p className="text-green-100 text-sm">Items Recycled</p>
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-white">₹1,200</p>
-                <p className="text-green-100 text-xs sm:text-sm">Rewards Earned</p>
+                <p className="text-2xl font-bold text-white">₹1,200</p>
+                <p className="text-green-100 text-sm">Rewards Earned</p>
               </div>
               <div>
-                <p className="text-xl sm:text-2xl font-bold text-white">15</p>
-                <p className="text-green-100 text-xs sm:text-sm">This Month</p>
+                <p className="text-2xl font-bold text-white">15</p>
+                <p className="text-green-100 text-sm">This Month</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Tab Navigation */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
+        <div ref={tabsRef} className="flex gap-4 justify-center">
           <Button
             variant={activeTab === 'rewards' ? 'default' : 'outline'}
             onClick={() => setActiveTab('rewards')}
-            className={`w-full sm:w-auto ${
-              activeTab === 'rewards' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm'
-            }`}
           >
             <Gift className="w-4 h-4 mr-2" />
             Rewards Store
@@ -82,11 +146,6 @@ const RecyclingRewards = () => {
           <Button
             variant={activeTab === 'history' ? 'default' : 'outline'}
             onClick={() => setActiveTab('history')}
-            className={`w-full sm:w-auto ${
-              activeTab === 'history' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm'
-            }`}
           >
             <Award className="w-4 h-4 mr-2" />
             Recycling History
@@ -94,122 +153,111 @@ const RecyclingRewards = () => {
           <Button
             variant={activeTab === 'achievements' ? 'default' : 'outline'}
             onClick={() => setActiveTab('achievements')}
-            className={`w-full sm:w-auto ${
-              activeTab === 'achievements' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 shadow-sm'
-            }`}
           >
             <Star className="w-4 h-4 mr-2" />
             Achievements
           </Button>
         </div>
 
-        {/* Rewards Store */}
-        {activeTab === 'rewards' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
-            {rewards.map((reward) => (
-              <Card key={reward.id} className="bg-white border-gray-200 shadow-lg hover:shadow-xl transition-shadow">
-                <CardContent className="p-4 sm:p-6">
-                  <div className="text-center">
-                    <div className="text-3xl sm:text-4xl mb-4">{reward.image}</div>
-                    <h3 className="text-gray-900 font-semibold text-lg mb-2">{reward.title}</h3>
-                    <Badge 
-                      variant="secondary" 
-                      className="mb-4 bg-blue-100 text-blue-800 border-blue-200 font-medium"
-                    >
-                      {reward.category}
-                    </Badge>
-                    <div className="space-y-3">
-                      <p className="text-xl sm:text-2xl font-bold text-green-600">{reward.value}</p>
-                      <p className="text-gray-600 font-medium">Cost: {reward.points} points</p>
-                      <Button 
-                        className={`w-full font-semibold shadow-md ${
-                          reward.available 
-                            ? 'bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white' 
-                            : 'bg-gray-300 text-gray-500 cursor-not-allowed hover:bg-gray-300'
-                        }`}
-                        disabled={!reward.available}
-                      >
-                        {reward.available ? 'Redeem Now' : 'Out of Stock'}
-                      </Button>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
-
-        {/* Recycling History */}
-        {activeTab === 'history' && (
-          <Card className="bg-white border-gray-200 shadow-lg">
-            <CardHeader className="pb-3 sm:pb-6">
-              <CardTitle className="text-gray-900 text-lg sm:text-xl">Your Recycling History</CardTitle>
-            </CardHeader>
-            <CardContent>
-              <div className="space-y-3 sm:space-y-4">
-                {recyclingHistory.map((item, index) => (
-                  <div key={index} className="flex flex-col sm:flex-row sm:items-center sm:justify-between p-3 sm:p-4 bg-gray-50 rounded-lg border border-gray-200 hover:bg-gray-100 transition-colors">
-                    <div className="mb-2 sm:mb-0">
-                      <p className="text-gray-900 font-medium text-sm sm:text-base">{item.items}</p>
-                      <p className="text-gray-600 text-xs sm:text-sm">{item.date}</p>
-                    </div>
-                    <div className="flex items-center justify-between sm:text-right sm:block">
-                      <p className="text-green-600 font-bold text-sm sm:text-base">+{item.points} pts</p>
-                      <Badge 
-                        variant={item.status === 'Verified' ? 'default' : 'secondary'}
-                        className={`ml-2 sm:ml-0 sm:mt-1 font-medium ${
-                          item.status === 'Verified' 
-                            ? 'bg-green-600 text-white hover:bg-green-700' 
-                            : 'bg-yellow-500 text-white hover:bg-yellow-600'
-                        }`}
-                      >
-                        {item.status}
+        {/* Content */}
+        <div ref={contentRef}>
+          {/* Rewards Store */}
+          {activeTab === 'rewards' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {rewards.map((reward, index) => (
+                <Card 
+                  key={reward.id} 
+                  ref={(el) => rewardCardsRef.current[index] = el}
+                  className="bg-card/80 border-border backdrop-blur-sm cursor-pointer"
+                  onMouseEnter={() => handleCardHover(index, true)}
+                  onMouseLeave={() => handleCardHover(index, false)}
+                >
+                  <CardContent className="p-6">
+                    <div className="text-center">
+                      <div className="text-4xl mb-4">{reward.image}</div>
+                      <h3 className="text-card-foreground font-semibold text-lg mb-2">{reward.title}</h3>
+                      <Badge variant="secondary" className="mb-4">
+                        {reward.category}
                       </Badge>
+                      <div className="space-y-3">
+                        <p className="text-2xl font-bold text-primary">{reward.value}</p>
+                        <p className="text-muted-foreground">Cost: {reward.points} points</p>
+                        <Button 
+                          className="w-full"
+                          disabled={!reward.available}
+                        >
+                          {reward.available ? 'Redeem Now' : 'Out of Stock'}
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                ))}
-              </div>
-            </CardContent>
-          </Card>
-        )}
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
 
-        {/* Achievements */}
-        {activeTab === 'achievements' && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 sm:gap-6">
-            {achievements.map((achievement, index) => (
-              <Card 
-                key={index} 
-                className={`border-gray-200 shadow-lg hover:shadow-xl transition-all ${
-                  achievement.earned 
-                    ? 'bg-gradient-to-br from-yellow-50 to-orange-50 border-yellow-200' 
-                    : 'bg-white'
-                }`}
-              >
-                <CardContent className="p-4 sm:p-6 text-center">
-                  <div className="text-3xl sm:text-4xl mb-4">{achievement.icon}</div>
-                  <h3 className={`font-semibold text-lg mb-2 ${
-                    achievement.earned ? 'text-yellow-700' : 'text-gray-900'
-                  }`}>
-                    {achievement.title}
-                  </h3>
-                  <p className="text-gray-600 mb-4 text-sm sm:text-base">{achievement.description}</p>
-                  <Badge 
-                    variant={achievement.earned ? 'default' : 'secondary'}
-                    className={`font-medium ${
-                      achievement.earned 
-                        ? 'bg-yellow-500 text-white hover:bg-yellow-600' 
-                        : 'bg-gray-200 text-gray-700 hover:bg-gray-300'
-                    }`}
-                  >
-                    {achievement.earned ? 'Earned' : 'Locked'}
-                  </Badge>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        )}
+          {/* Recycling History */}
+          {activeTab === 'history' && (
+            <Card className="bg-card/80 border-border backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-card-foreground">Your Recycling History</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="space-y-4">
+                  {recyclingHistory.map((item, index) => (
+                    <div key={index} className="flex items-center justify-between p-4 bg-muted/50 rounded-lg">
+                      <div>
+                        <p className="text-foreground font-medium">{item.items}</p>
+                        <p className="text-muted-foreground text-sm">{item.date}</p>
+                      </div>
+                      <div className="text-right">
+                        <p className="text-green-400 font-bold">+{item.points} pts</p>
+                        <Badge 
+                          variant={item.status === 'Verified' ? 'default' : 'secondary'}
+                          className={item.status === 'Verified' ? 'bg-green-600' : 'bg-yellow-600'}
+                        >
+                          {item.status}
+                        </Badge>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </CardContent>
+            </Card>
+          )}
+
+          {/* Achievements */}
+          {activeTab === 'achievements' && (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {achievements.map((achievement, index) => (
+                <Card 
+                  key={index} 
+                  className={`border-border backdrop-blur-sm ${
+                    achievement.earned 
+                      ? 'bg-gradient-to-br from-yellow-600/20 to-orange-600/20 border-yellow-500/30' 
+                      : 'bg-card/80'
+                  }`}
+                >
+                  <CardContent className="p-6 text-center">
+                    <div className="text-4xl mb-4">{achievement.icon}</div>
+                    <h3 className={`font-semibold text-lg mb-2 ${
+                      achievement.earned ? 'text-yellow-400' : 'text-foreground'
+                    }`}>
+                      {achievement.title}
+                    </h3>
+                    <p className="text-muted-foreground mb-4">{achievement.description}</p>
+                    <Badge 
+                      variant={achievement.earned ? 'default' : 'secondary'}
+                      className={achievement.earned ? 'bg-yellow-600' : ''}
+                    >
+                      {achievement.earned ? 'Earned' : 'Locked'}
+                    </Badge>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

@@ -52,67 +52,62 @@ const Leaderboard = () => {
 
   const getRankIcon = (rank: number) => {
     switch (rank) {
-      case 1: return <Trophy className="w-6 h-6 text-yellow-500" />;
-      case 2: return <Medal className="w-6 h-6 text-gray-500" />;
+      case 1: return <Trophy className="w-6 h-6 text-yellow-400" />;
+      case 2: return <Medal className="w-6 h-6 text-gray-400" />;
       case 3: return <Award className="w-6 h-6 text-amber-600" />;
-      default: return <span className="text-gray-600 font-bold text-lg">#{rank}</span>;
+      default: return <span className="text-gray-400 font-bold text-lg">#{rank}</span>;
     }
   };
 
   const getRankBg = (rank: number) => {
     switch (rank) {
-      case 1: return 'bg-gradient-to-r from-yellow-500 to-yellow-600 border-yellow-400 shadow-lg';
-      case 2: return 'bg-gradient-to-r from-gray-500 to-gray-600 border-gray-400 shadow-lg';
-      case 3: return 'bg-gradient-to-r from-amber-500 to-amber-600 border-amber-400 shadow-lg';
-      default: return 'bg-white border-gray-200 shadow-lg';
+      case 1: return 'bg-gradient-to-r from-yellow-600 to-yellow-700 border-yellow-500 text-white';
+      case 2: return 'bg-gradient-to-r from-slate-500 to-slate-600 border-slate-400 text-white';
+      case 3: return 'bg-gradient-to-r from-amber-600 to-amber-700 border-amber-500 text-white';
+      default: return 'bg-card/50 border-border';
     }
   };
 
   const userRank = 15; // Current user's rank
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-50 via-blue-50 to-indigo-50">
-      <div className="w-full max-w-6xl mx-auto space-y-4 sm:space-y-6 p-4 sm:p-6">
+    <div className="min-h-screen bg-gradient-to-br from-background to-slate-100 dark:from-slate-900 dark:to-slate-800 p-6">
+      <div className="max-w-6xl mx-auto space-y-6">
         {/* Header */}
-        <div className="text-center mb-6 sm:mb-8">
-          <h1 className="text-3xl sm:text-4xl font-bold text-gray-900 mb-2 bg-gradient-to-r from-purple-600 to-blue-600 bg-clip-text text-transparent">Leaderboard</h1>
-          <p className="text-base sm:text-lg text-gray-600">Compete with other community members and climb the ranks!</p>
+        <div className="text-center">
+          <h1 className="text-4xl font-bold text-foreground mb-2">Leaderboard</h1>
+          <p className="text-muted-foreground">Compete with other community members and climb the ranks!</p>
         </div>
 
         {/* User's Current Position */}
-        <Card className="bg-gradient-to-r from-blue-600 to-purple-600 border-none shadow-xl">
-          <CardContent className="p-4 sm:p-6">
-            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between space-y-4 sm:space-y-0">
-              <div className="flex items-center gap-3 sm:gap-4">
-                <Avatar className="w-12 h-12 sm:w-16 sm:h-16 shadow-md">
-                  <AvatarFallback className="bg-white text-blue-600 text-lg sm:text-xl font-bold">JD</AvatarFallback>
+        <Card className="bg-gradient-to-r from-primary to-secondary border-none text-primary-foreground">
+          <CardContent className="p-6">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-4">
+                <Avatar className="w-16 h-16">
+                  <AvatarFallback className="bg-primary-foreground text-primary text-xl font-bold">JD</AvatarFallback>
                 </Avatar>
                 <div>
-                  <h3 className="text-white text-lg sm:text-xl font-bold">Your Current Position</h3>
-                  <p className="text-blue-100 text-sm sm:text-base">Keep climbing to reach the top!</p>
+                  <h3 className="text-xl font-bold">Your Current Position</h3>
+                  <p className="text-primary-foreground/80">Keep climbing to reach the top!</p>
                 </div>
               </div>
-              <div className="text-center sm:text-right">
-                <div className="flex items-center justify-center sm:justify-end gap-2 mb-2">
-                  <span className="text-2xl sm:text-3xl font-bold text-white">#{userRank}</span>
-                  <TrendingUp className="w-5 h-5 sm:w-6 sm:h-6 text-green-300" />
+              <div className="text-right">
+                <div className="flex items-center gap-2 mb-2">
+                  <span className="text-3xl font-bold">#{userRank}</span>
+                  <TrendingUp className="w-6 h-6 text-green-400" />
                 </div>
-                <p className="text-blue-100 text-sm sm:text-base font-medium">2,450 points</p>
+                <p className="text-primary-foreground/80">2,450 points</p>
               </div>
             </div>
           </CardContent>
         </Card>
 
         {/* Tab Navigation */}
-        <div className="flex flex-col sm:flex-row gap-2 sm:gap-4 justify-center">
+        <div className="flex justify-center gap-4">
           <Button
             variant={activeTab === 'overall' ? 'default' : 'outline'}
             onClick={() => setActiveTab('overall')}
-            className={`w-full sm:w-auto font-medium shadow-sm ${
-              activeTab === 'overall' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-            }`}
           >
             <Trophy className="w-4 h-4 mr-2" />
             Overall
@@ -120,11 +115,6 @@ const Leaderboard = () => {
           <Button
             variant={activeTab === 'monthly' ? 'default' : 'outline'}
             onClick={() => setActiveTab('monthly')}
-            className={`w-full sm:w-auto font-medium shadow-sm ${
-              activeTab === 'monthly' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-            }`}
           >
             <Star className="w-4 h-4 mr-2" />
             This Month
@@ -132,11 +122,6 @@ const Leaderboard = () => {
           <Button
             variant={activeTab === 'weekly' ? 'default' : 'outline'}
             onClick={() => setActiveTab('weekly')}
-            className={`w-full sm:w-auto font-medium shadow-sm ${
-              activeTab === 'weekly' 
-                ? 'bg-blue-600 hover:bg-blue-700 text-white shadow-lg' 
-                : 'bg-white border-gray-300 text-gray-700 hover:bg-gray-50 hover:border-gray-400'
-            }`}
           >
             <Users className="w-4 h-4 mr-2" />
             This Week
@@ -144,39 +129,21 @@ const Leaderboard = () => {
         </div>
 
         {/* Top 3 Podium */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 sm:gap-6">
-          {getCurrentData().slice(0, 3).map((leader, index) => (
-            <Card key={leader.rank} className={`${getRankBg(leader.rank)} hover:shadow-xl transition-shadow`}>
-              <CardContent className="p-4 sm:p-6 text-center">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+          {getCurrentData().slice(0, 3).map((leader) => (
+            <Card key={leader.rank} className={`${getRankBg(leader.rank)} backdrop-blur-sm`}>
+              <CardContent className="p-6 text-center">
                 <div className="mb-4">{getRankIcon(leader.rank)}</div>
-                <Avatar className="w-14 h-14 sm:w-16 sm:h-16 mx-auto mb-4 shadow-md">
-                  <AvatarFallback className={`text-lg font-bold ${
-                    leader.rank <= 3 ? 'bg-white text-gray-800' : 'bg-gradient-to-br from-blue-500 to-purple-600 text-white'
-                  }`}>
+                <Avatar className="w-16 h-16 mx-auto mb-4">
+                  <AvatarFallback className="bg-background/20 text-lg font-bold">
                     {leader.avatar}
                   </AvatarFallback>
                 </Avatar>
-                <h3 className={`font-bold text-base sm:text-lg mb-1 ${
-                  leader.rank <= 3 ? 'text-white' : 'text-gray-900'
-                }`}>
-                  {leader.name}
-                </h3>
-                <Badge className={`mb-3 text-xs font-medium ${
-                  leader.rank <= 3 
-                    ? 'bg-white/20 text-white hover:bg-white/30' 
-                    : 'bg-blue-100 text-blue-800 border-blue-200 hover:bg-blue-200'
-                }`}>
-                  {leader.badge}
-                </Badge>
+                <h3 className="font-bold text-lg mb-1">{leader.name}</h3>
+                <Badge className="mb-3 bg-white/20">{leader.badge}</Badge>
                 <div className="space-y-2 text-sm">
-                  <p className={`font-bold text-xl ${
-                    leader.rank <= 3 ? 'text-white' : 'text-gray-900'
-                  }`}>
-                    {leader.points} pts
-                  </p>
-                  <div className={`grid grid-cols-2 gap-2 ${
-                    leader.rank <= 3 ? 'text-white/90' : 'text-gray-600'
-                  }`}>
+                  <p className="font-bold text-xl">{leader.points} pts</p>
+                  <div className="grid grid-cols-2 gap-2 text-white/80">
                     <div>
                       <p className="font-medium">{leader.reports}</p>
                       <p className="text-xs">Reports</p>
@@ -193,56 +160,56 @@ const Leaderboard = () => {
         </div>
 
         {/* Full Leaderboard */}
-        <Card className="bg-white border-gray-200 shadow-lg">
-          <CardHeader className="pb-3 sm:pb-6">
-            <CardTitle className="text-gray-900 text-lg sm:text-xl">Complete Rankings</CardTitle>
+        <Card className="bg-card/50 border-border backdrop-blur-sm">
+          <CardHeader>
+            <CardTitle>Complete Rankings</CardTitle>
           </CardHeader>
           <CardContent>
-            <div className="space-y-2 sm:space-y-3">
+            <div className="space-y-3">
               {getCurrentData().map((leader) => (
                 <div 
                   key={leader.rank}
-                  className={`flex items-center gap-3 sm:gap-4 p-3 sm:p-4 rounded-lg transition-all ${
+                  className={`flex items-center gap-4 p-4 rounded-lg transition-colors ${
                     leader.rank === userRank 
-                      ? 'bg-blue-50 border border-blue-200 shadow-sm' 
-                      : 'bg-gray-50 hover:bg-gray-100 border border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                      ? 'bg-primary/10 border border-primary/20' 
+                      : 'bg-muted/30 hover:bg-muted/50'
                   }`}
                 >
-                  <div className="flex items-center justify-center w-10 sm:w-12 flex-shrink-0">
+                  <div className="flex items-center justify-center w-12">
                     {getRankIcon(leader.rank)}
                   </div>
-                  <Avatar className="w-10 h-10 sm:w-12 sm:h-12 shadow-sm">
-                    <AvatarFallback className="bg-gradient-to-br from-blue-500 to-purple-600 text-white font-bold text-sm sm:text-base">
+                  <Avatar className="w-12 h-12">
+                    <AvatarFallback className="bg-gradient-to-br from-primary to-secondary text-primary-foreground font-bold">
                       {leader.avatar}
                     </AvatarFallback>
                   </Avatar>
-                  <div className="flex-1 min-w-0">
+                  <div className="flex-1">
                     <div className="flex items-center gap-2 mb-1">
-                      <h3 className="text-gray-900 font-semibold text-sm sm:text-base truncate">{leader.name}</h3>
+                      <h3 className="text-foreground font-semibold">{leader.name}</h3>
                       {leader.rank === userRank && (
-                        <Badge className="bg-blue-600 text-white text-xs font-medium hover:bg-blue-700">You</Badge>
+                        <Badge className="bg-primary text-primary-foreground text-xs">You</Badge>
                       )}
                     </div>
-                    <Badge variant="secondary" className="bg-purple-100 text-purple-800 border-purple-200 text-xs font-medium">
+                    <Badge variant="secondary">
                       {leader.badge}
                     </Badge>
                   </div>
-                  <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 sm:gap-4 text-center text-xs sm:text-sm flex-shrink-0">
+                  <div className="grid grid-cols-4 gap-4 text-center text-sm">
                     <div>
-                      <p className="text-gray-900 font-bold">{leader.points}</p>
-                      <p className="text-gray-500 text-xs">Points</p>
-                    </div>
-                    <div className="hidden sm:block">
-                      <p className="text-gray-900 font-bold">{leader.reports}</p>
-                      <p className="text-gray-500 text-xs">Reports</p>
-                    </div>
-                    <div className="hidden sm:block">
-                      <p className="text-gray-900 font-bold">{leader.recycled}</p>
-                      <p className="text-gray-500 text-xs">Recycled</p>
+                      <p className="text-foreground font-bold">{leader.points}</p>
+                      <p className="text-muted-foreground text-xs">Points</p>
                     </div>
                     <div>
-                      <p className="text-gray-900 font-bold">{leader.streak}</p>
-                      <p className="text-gray-500 text-xs">Streak</p>
+                      <p className="text-foreground font-bold">{leader.reports}</p>
+                      <p className="text-muted-foreground text-xs">Reports</p>
+                    </div>
+                    <div>
+                      <p className="text-foreground font-bold">{leader.recycled}</p>
+                      <p className="text-muted-foreground text-xs">Recycled</p>
+                    </div>
+                    <div>
+                      <p className="text-foreground font-bold">{leader.streak}</p>
+                      <p className="text-muted-foreground text-xs">Streak</p>
                     </div>
                   </div>
                 </div>
