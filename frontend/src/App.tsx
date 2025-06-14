@@ -11,7 +11,6 @@ import CivicReporting from "./pages/CivicReporting";
 import RecyclingRewards from "./pages/RecyclingRewards";
 import IssueMap from "./pages/IssueMap";
 import Leaderboard from "./pages/Leaderboard";
-import WalletIntegration from "./pages/WalletIntegration";
 import Profile from "./pages/Profile";
 import Notifications from "./pages/Notifications";
 import Analytics from "./pages/Analytics";
@@ -33,7 +32,6 @@ const App = () => (
             <Route path="/recycling-rewards" element={<RecyclingRewards />} />
             <Route path="/issue-map" element={<IssueMap />} />
             <Route path="/leaderboard" element={<Leaderboard />} />
-            <Route path="/wallet-integration" element={<WalletIntegration />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/notifications" element={<Notifications />} />
             <Route path="/analytics" element={<Analytics />} />
