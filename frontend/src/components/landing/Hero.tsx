@@ -1,4 +1,3 @@
-
 import React, { useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { gsap } from 'gsap';
@@ -24,9 +23,14 @@ const Hero = () => {
 
   return (
     <div ref={heroRef} className="relative min-h-[calc(100vh-80px)] flex items-center justify-center text-center overflow-hidden -mt-20 -mx-4 -mb-8">
+      {/* Grid Background */}
+      <div className="absolute inset-0 [background-size:20px_20px] [background-image:linear-gradient(to_right,rgba(148,163,184,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.4)_1px,transparent_1px)]"></div>
+      
+      {/* Original background image */}
       <div className="absolute inset-0 bg-cover bg-center bg-no-repeat" style={{ backgroundImage: "url('https://images.unsplash.com/photo-1596432150438-3372e57b4421?q=80&w=2070&auto=format&fit=crop')" }}>
         <div className="absolute inset-0 bg-gradient-to-br from-primary/60 via-secondary/60 to-white/10"></div>
       </div>
+      
       <div className="relative z-10 p-4">
         <h1 className="hero-anim text-4xl md:text-6xl lg:text-7xl font-bold text-white mb-6 leading-tight drop-shadow-lg">
           JanSahay
@@ -48,3 +52,5 @@ const Hero = () => {
 };
 
 export default Hero;
+
+export { Hero }

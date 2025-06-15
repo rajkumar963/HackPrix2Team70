@@ -9,8 +9,10 @@ import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Edit3, Save, Star, Award, Bell, Shield, Globe, Moon } from 'lucide-react';
 import { gsap } from 'gsap';
+import { useAuth } from '@/context/AuthContext';
 
 const Profile = () => {
+  const { user } = useAuth();
   const [isEditing, setIsEditing] = useState(false);
   const [profileData, setProfileData] = useState({
     name: 'John Doe',
@@ -28,8 +30,14 @@ const Profile = () => {
   const achievementsCardRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // GSAP animations can be added here if needed in the future
-  }, []);
+    if (user) {
+      setProfileData(prevData => ({
+        ...prevData,
+        name: user.name || prevData.name,
+        email: user.email,
+      }));
+    }
+  }, [user]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
@@ -63,6 +71,15 @@ const Profile = () => {
     { title: 'Glass Master', description: 'Recycled 100 glass items', icon: Shield, earned: false }
   ];
 
+  const getInitials = (name: string) => {
+    if (!name) return '??';
+    const names = name.split(' ');
+    if (names.length > 1 && names[0] && names[names.length - 1]) {
+      return `${names[0][0]}${names[names.length - 1][0]}`.toUpperCase();
+    }
+    return name.substring(0, 2).toUpperCase();
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
@@ -80,7 +97,9 @@ const Profile = () => {
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-4">
               <Avatar className="w-16 h-16">
-                <AvatarFallback className="bg-white text-blue-600 text-xl font-bold">JD</AvatarFallback>
+                <AvatarFallback className="bg-white text-blue-600 text-xl font-bold">
+                  {getInitials(profileData.name)}
+                </AvatarFallback>
               </Avatar>
               <div>
                 <h3 className="text-white text-lg font-semibold">{profileData.name}</h3>

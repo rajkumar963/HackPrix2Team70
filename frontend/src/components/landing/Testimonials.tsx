@@ -1,17 +1,17 @@
 
-import React, { useRef, useEffect } from 'react';
-import { gsap } from 'gsap';
-import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import React from 'react';
 import { Quote } from 'lucide-react';
-
-gsap.registerPlugin(ScrollTrigger);
+import {
+  Carousel,
+  CarouselContent,
+  CarouselItem,
+} from "@/components/ui/carousel";
+import Autoplay from "embla-carousel-autoplay";
 
 const Testimonials = () => {
-  const testimonialsRef = useRef<HTMLDivElement>(null);
-
   const testimonials = [
     {
-      quote: "EcoChain has transformed how our community handles civic issues. It's fast, transparent, and incredibly effective.",
+      quote: "JanSahay has transformed how our community handles civic issues. It's fast, transparent, and incredibly effective.",
       name: "Anjali Sharma",
       title: "Community Leader, Jaipur",
       avatar: "https://i.pravatar.cc/150?img=1"
@@ -27,48 +27,67 @@ const Testimonials = () => {
       name: "Priya Singh",
       title: "Student, Lucknow",
       avatar: "https://i.pravatar.cc/150?img=5"
+    },
+    {
+      quote: "Reporting a pothole was surprisingly easy and I got updates on the repair status. Great initiative!",
+      name: "Amit Kumar",
+      title: "Software Engineer, Bengaluru",
+      avatar: "https://i.pravatar.cc/150?img=7"
+    },
+    {
+      quote: "I love the leaderboard feature. It adds a bit of friendly competition to keeping our neighborhood clean.",
+      name: "Sunita Reddy",
+      title: "Homemaker, Hyderabad",
+      avatar: "https://i.pravatar.cc/150?img=8"
+    },
+    {
+      quote: "The transparency is what I appreciate most. You can see what's being done about the issues you care about.",
+      name: "Vikram Patel",
+      title: "Small Business Owner, Ahmedabad",
+      avatar: "https://i.pravatar.cc/150?img=11"
     }
   ];
 
-  useEffect(() => {
-    if (!testimonialsRef.current) return;
-    gsap.fromTo('.testimonial-card', {
-      y: 50,
-      opacity: 0,
-    }, {
-      y: 0,
-      opacity: 1,
-      duration: 0.6,
-      stagger: 0.2,
-      ease: 'power2.out',
-      scrollTrigger: {
-        trigger: testimonialsRef.current,
-        start: 'top 80%',
-      }
-    });
-  }, []);
-
   return (
-    <div ref={testimonialsRef} className="py-20">
+    <div className="py-20">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-transparent bg-clip-text bg-gradient-to-bl from-primary to-secondary">What Our Citizens Say</h2>
         <p className="text-lg text-primary/80 mt-2">Real stories from real people making a difference.</p>
       </div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {testimonials.map((testimonial, index) => (
-          <div key={index} className="testimonial-card bg-card/50 backdrop-blur-sm border border-border p-8 rounded-2xl flex flex-col">
-            <Quote className="w-8 h-8 text-primary mb-4" />
-            <p className="text-muted-foreground italic flex-grow">"{testimonial.quote}"</p>
-            <div className="mt-6 flex items-center">
-              <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full mr-4" />
-              <div>
-                <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
-                <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+      <Carousel
+        plugins={[
+          Autoplay({
+            delay: 2500,
+            stopOnInteraction: false,
+            stopOnMouseEnter: true,
+          }),
+        ]}
+        opts={{
+          align: "start",
+          loop: true,
+        }}
+        className="w-full"
+      >
+        <CarouselContent>
+          {testimonials.map((testimonial, index) => (
+            <CarouselItem key={index} className="md:basis-1/2 lg:basis-1/3">
+              <div className="p-1 h-full">
+                <div className="bg-card/50 backdrop-blur-sm border border-border p-8 rounded-2xl flex flex-col h-full">
+                  <Quote className="w-8 h-8 text-primary mb-4" />
+                  <p className="text-muted-foreground italic flex-grow">"{testimonial.quote}"</p>
+                  <div className="mt-6 flex items-center">
+                    <img src={testimonial.avatar} alt={testimonial.name} className="w-12 h-12 rounded-full mr-4" />
+                    <div>
+                      <h4 className="font-semibold text-foreground">{testimonial.name}</h4>
+                      <p className="text-sm text-muted-foreground">{testimonial.title}</p>
+                    </div>
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
-        ))}
-      </div>
+            </CarouselItem>
+          ))}
+        </CarouselContent>
+      </Carousel>
     </div>
   );
 };
