@@ -8,14 +8,7 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Edit3, Save, Star, Award, Bell, Shield, Globe, Moon } from 'lucide-react';
-
-// Mock user context for demo
-const useAuth = () => ({
-  user: {
-    name: 'John Doe',
-    email: 'john.doe@example.com'
-  }
-});
+import { useAuth } from '@/context/AuthContext';
 
 const Profile = () => {
   const { user } = useAuth();
@@ -184,7 +177,7 @@ const Profile = () => {
                     Cancel
                   </Button>
                   <Button onClick={saveChanges} className="bg-blue-600 hover:bg-blue-700 text-white shadow-md">
-                    <Save className="mr-2 w-4 h-4" /> Save Changes
+                    <Save className="mr-2 w-4 h-4" /> Save
                   </Button>
                 </div>
               ) : (
@@ -203,30 +196,21 @@ const Profile = () => {
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div>
-                <Label className="text-gray-900 font-medium">Receive Recycling Rewards Notifications</Label>
-                <p className="text-sm text-gray-600">Get notified about new rewards and achievements</p>
-              </div>
+              <Label className="text-gray-900 font-medium">Receive Recycling Rewards Notifications</Label>
               <Switch
                 checked={profileData.rewardsOptIn}
                 onCheckedChange={(checked) => handleToggleChange('rewardsOptIn', checked)}
               />
             </div>
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div>
-                <Label className="text-gray-900 font-medium">Dark Mode</Label>
-                <p className="text-sm text-gray-600">Switch between light and dark themes</p>
-              </div>
+              <Label className="text-gray-900 font-medium">Dark Mode</Label>
               <Switch
                 checked={profileData.darkMode}
                 onCheckedChange={(checked) => handleToggleChange('darkMode', checked)}
               />
             </div>
             <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
-              <div>
-                <Label className="text-gray-900 font-medium">Language</Label>
-                <p className="text-sm text-gray-600">Choose your preferred language</p>
-              </div>
+              <Label className="text-gray-900 font-medium">Language</Label>
               <Button variant="outline" className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Globe className="mr-2 w-4 h-4" /> English
               </Button>
