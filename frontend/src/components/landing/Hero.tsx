@@ -22,7 +22,7 @@ const Hero = () => {
   }, []);
 
   return (
-    <div ref={heroRef} className="relative min-h-[calc(100vh-80px)] flex items-center justify-center text-center overflow-hidden -mt-20 -mx-4 -mb-8">
+    <div ref={heroRef} className="relative min-h-screen flex items-center justify-center text-center overflow-hidden -mt-20 -mx-4 -mb-8">
       {/* Grid Background */}
       <div className="absolute inset-0 [background-size:20px_20px] [background-image:linear-gradient(to_right,rgba(148,163,184,0.4)_1px,transparent_1px),linear-gradient(to_bottom,rgba(148,163,184,0.4)_1px,transparent_1px)]"></div>
       
@@ -42,7 +42,7 @@ const Hero = () => {
           <Button asChild size="lg" className="text-lg px-8 py-6 rounded-full hover:scale-105 transition-transform">
             <Link to="/civic-reporting">Report an Issue</Link>
           </Button>
-          <Button asChild variant="outline" size="lg" className="bg-white/10 backdrop-blur-sm border-slate-300 text-slate-200 text-lg px-8 py-6 rounded-full hover:bg-white/20 hover:text-white hover:scale-105 transition-all">
+          <Button asChild variant="outline" size="lg" className="bg-gray-100 backdrop-blur-sm border-slate-300 text-gray-500 text-lg px-8 py-6 rounded-full hover:bg-white/20 hover:text-white hover:scale-105 transition-all">
             <Link to="/issue-map">View Live Map</Link>
           </Button>
         </div>
