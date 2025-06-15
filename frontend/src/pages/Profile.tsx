@@ -8,8 +8,14 @@ import { Badge } from '@/components/ui/badge';
 import { Switch } from '@/components/ui/switch';
 import { Avatar, AvatarFallback } from '@/components/ui/avatar';
 import { User, Mail, Phone, MapPin, Calendar, Camera, Edit3, Save, Star, Award, Bell, Shield, Globe, Moon } from 'lucide-react';
-import { gsap } from 'gsap';
-import { useAuth } from '@/context/AuthContext';
+
+// Mock user context for demo
+const useAuth = () => ({
+  user: {
+    name: 'John Doe',
+    email: 'john.doe@example.com'
+  }
+});
 
 const Profile = () => {
   const { user } = useAuth();
@@ -81,108 +87,108 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 p-6">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 p-6">
       <div className="max-w-4xl mx-auto space-y-6">
         {/* Header */}
         <div ref={headerRef} className="text-center">
-          <h1 className="text-4xl font-bold text-white mb-2">Your Profile</h1>
-          <p className="text-purple-200">Manage your account settings and view your achievements.</p>
+          <h1 className="text-4xl font-bold text-gray-900 mb-2">Your Profile</h1>
+          <p className="text-gray-600">Manage your account settings and view your achievements.</p>
         </div>
 
         {/* Profile Card */}
-        <Card ref={profileCardRef} className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
+        <Card ref={profileCardRef} className="bg-white/80 border-gray-200 backdrop-blur-sm shadow-lg">
           <CardHeader>
-            <CardTitle className="text-white">Personal Information</CardTitle>
+            <CardTitle className="text-gray-900">Personal Information</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="flex items-center space-x-4">
-              <Avatar className="w-16 h-16">
-                <AvatarFallback className="bg-white text-blue-600 text-xl font-bold">
+              <Avatar className="w-16 h-16 ring-4 ring-blue-100">
+                <AvatarFallback className="bg-blue-600 text-white text-xl font-bold">
                   {getInitials(profileData.name)}
                 </AvatarFallback>
               </Avatar>
               <div>
-                <h3 className="text-white text-lg font-semibold">{profileData.name}</h3>
-                <Badge className="bg-purple-600 text-white">Eco-Enthusiast</Badge>
+                <h3 className="text-gray-900 text-lg font-semibold">{profileData.name}</h3>
+                <Badge className="bg-green-100 text-green-800 border-green-200">Eco-Enthusiast</Badge>
               </div>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-gray-300"><User className="mr-2 inline-block w-4 h-4" /> Name</Label>
+              <Label className="text-gray-700 font-medium"><User className="mr-2 inline-block w-4 h-4" /> Name</Label>
               {isEditing ? (
                 <Input
                   type="text"
                   name="name"
                   value={profileData.name}
                   onChange={handleInputChange}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               ) : (
-                <p className="text-gray-400">{profileData.name}</p>
+                <p className="text-gray-600 bg-gray-50 p-3 rounded-md">{profileData.name}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label className="text-gray-300"><Mail className="mr-2 inline-block w-4 h-4" /> Email</Label>
-              <p className="text-gray-400">{profileData.email}</p>
+              <Label className="text-gray-700 font-medium"><Mail className="mr-2 inline-block w-4 h-4" /> Email</Label>
+              <p className="text-gray-600 bg-gray-50 p-3 rounded-md">{profileData.email}</p>
             </div>
 
             <div className="space-y-2">
-              <Label className="text-gray-300"><Phone className="mr-2 inline-block w-4 h-4" /> Phone</Label>
+              <Label className="text-gray-700 font-medium"><Phone className="mr-2 inline-block w-4 h-4" /> Phone</Label>
               {isEditing ? (
                 <Input
                   type="tel"
                   name="phone"
                   value={profileData.phone}
                   onChange={handleInputChange}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               ) : (
-                <p className="text-gray-400">{profileData.phone}</p>
+                <p className="text-gray-600 bg-gray-50 p-3 rounded-md">{profileData.phone}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label className="text-gray-300"><MapPin className="mr-2 inline-block w-4 h-4" /> Location</Label>
+              <Label className="text-gray-700 font-medium"><MapPin className="mr-2 inline-block w-4 h-4" /> Location</Label>
               {isEditing ? (
                 <Input
                   type="text"
                   name="location"
                   value={profileData.location}
                   onChange={handleInputChange}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               ) : (
-                <p className="text-gray-400">{profileData.location}</p>
+                <p className="text-gray-600 bg-gray-50 p-3 rounded-md">{profileData.location}</p>
               )}
             </div>
 
             <div className="space-y-2">
-              <Label className="text-gray-300"><Calendar className="mr-2 inline-block w-4 h-4" /> Bio</Label>
+              <Label className="text-gray-700 font-medium"><Calendar className="mr-2 inline-block w-4 h-4" /> Bio</Label>
               {isEditing ? (
                 <Textarea
                   name="bio"
                   value={profileData.bio}
                   onChange={handleInputChange}
-                  className="bg-gray-700 border-gray-600 text-white"
+                  className="bg-white border-gray-300 text-gray-900 focus:border-blue-500 focus:ring-blue-500"
                 />
               ) : (
-                <p className="text-gray-400">{profileData.bio}</p>
+                <p className="text-gray-600 bg-gray-50 p-3 rounded-md">{profileData.bio}</p>
               )}
             </div>
 
-            <div className="flex justify-end">
+            <div className="flex justify-end pt-4 border-t border-gray-200">
               {isEditing ? (
                 <div className="space-x-2">
-                  <Button variant="outline" onClick={toggleEditing} className="bg-gray-700 border-gray-600 text-gray-300 hover:bg-gray-600">
+                  <Button variant="outline" onClick={toggleEditing} className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50">
                     Cancel
                   </Button>
-                  <Button onClick={saveChanges} className="bg-blue-600 hover:bg-blue-700 text-white">
-                    <Save className="mr-2 w-4 h-4" /> Save
+                  <Button onClick={saveChanges} className="bg-blue-600 hover:bg-blue-700 text-white shadow-md">
+                    <Save className="mr-2 w-4 h-4" /> Save Changes
                   </Button>
                 </div>
               ) : (
-                <Button onClick={toggleEditing} className="bg-blue-600 hover:bg-blue-700 text-white">
+                <Button onClick={toggleEditing} className="bg-blue-600 hover:bg-blue-700 text-white shadow-md">
                   <Edit3 className="mr-2 w-4 h-4" /> Edit Profile
                 </Button>
               )}
@@ -191,28 +197,37 @@ const Profile = () => {
         </Card>
 
         {/* Settings Card */}
-        <Card ref={settingsCardRef} className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
+        <Card ref={settingsCardRef} className="bg-white/80 border-gray-200 backdrop-blur-sm shadow-lg">
           <CardHeader>
-            <CardTitle className="text-white">Settings</CardTitle>
+            <CardTitle className="text-gray-900">Settings</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
-            <div className="flex items-center justify-between">
-              <Label className="text-gray-300">Receive Recycling Rewards Notifications</Label>
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <Label className="text-gray-900 font-medium">Receive Recycling Rewards Notifications</Label>
+                <p className="text-sm text-gray-600">Get notified about new rewards and achievements</p>
+              </div>
               <Switch
                 checked={profileData.rewardsOptIn}
                 onCheckedChange={(checked) => handleToggleChange('rewardsOptIn', checked)}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <Label className="text-gray-300">Dark Mode</Label>
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <Label className="text-gray-900 font-medium">Dark Mode</Label>
+                <p className="text-sm text-gray-600">Switch between light and dark themes</p>
+              </div>
               <Switch
                 checked={profileData.darkMode}
                 onCheckedChange={(checked) => handleToggleChange('darkMode', checked)}
               />
             </div>
-            <div className="flex items-center justify-between">
-              <Label className="text-gray-300">Language</Label>
-              <Button variant="outline" className="bg-gray-700 border-gray-600 text-gray-300">
+            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div>
+                <Label className="text-gray-900 font-medium">Language</Label>
+                <p className="text-sm text-gray-600">Choose your preferred language</p>
+              </div>
+              <Button variant="outline" className="bg-white border-gray-300 text-gray-700 hover:bg-gray-50">
                 <Globe className="mr-2 w-4 h-4" /> English
               </Button>
             </div>
@@ -220,25 +235,35 @@ const Profile = () => {
         </Card>
 
         {/* Achievements Card */}
-        <Card ref={achievementsCardRef} className="bg-gray-800/50 border-gray-700 backdrop-blur-sm">
+        <Card ref={achievementsCardRef} className="bg-white/80 border-gray-200 backdrop-blur-sm shadow-lg">
           <CardHeader>
-            <CardTitle className="text-white">Achievements</CardTitle>
+            <CardTitle className="text-gray-900">Achievements</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
               {achievements.map((achievement, index) => (
-                <div key={index} className="flex items-center justify-between p-4 rounded-lg bg-gray-700/30">
+                <div key={index} className={`flex items-center justify-between p-4 rounded-lg border-2 transition-all duration-300 hover:shadow-md ${
+                  achievement.earned 
+                    ? 'bg-green-50 border-green-200' 
+                    : 'bg-gray-50 border-gray-200'
+                }`}>
                   <div className="flex items-center space-x-4">
-                    <achievement.icon className="w-6 h-6 text-yellow-400" />
+                    <div className={`p-2 rounded-full ${
+                      achievement.earned 
+                        ? 'bg-yellow-100 text-yellow-600' 
+                        : 'bg-gray-200 text-gray-400'
+                    }`}>
+                      <achievement.icon className="w-6 h-6" />
+                    </div>
                     <div>
-                      <h3 className="text-white font-semibold">{achievement.title}</h3>
-                      <p className="text-gray-400">{achievement.description}</p>
+                      <h3 className="text-gray-900 font-semibold">{achievement.title}</h3>
+                      <p className="text-gray-600 text-sm">{achievement.description}</p>
                     </div>
                   </div>
                   {achievement.earned ? (
-                    <Badge className="bg-green-600 text-white">Earned</Badge>
+                    <Badge className="bg-green-600 text-white border-green-600">Earned</Badge>
                   ) : (
-                    <Badge className="bg-gray-600 text-white">Locked</Badge>
+                    <Badge variant="outline" className="bg-white text-gray-600 border-gray-300">Locked</Badge>
                   )}
                 </div>
               ))}
