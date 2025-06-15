@@ -36,8 +36,7 @@ const Header = () => {
       <div className="container mx-auto px-4">
         <div className="flex justify-between items-center h-20">
           <Link to="/" className="flex items-center space-x-2 header-anim">
-            <ShieldCheck className="text-blue-600 w-8 h-8" />
-            <span className="text-2xl font-bold text-foreground">JanSahay</span>
+            <img src='https://res.cloudinary.com/dsdcta1sr/image/upload/v1749967567/android-chrome-192x192_b3owbf.png' className="text-blue-600 w-8 h-8" />            <span className="text-2xl font-bold text-foreground">JanSahay</span>
           </Link>
           <nav className="hidden md:flex items-center space-x-6">
             {navLinks.map((link, index) => (

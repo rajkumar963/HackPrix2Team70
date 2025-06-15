@@ -11,8 +11,7 @@ const Footer = () => {
           {/* Column 1: Brand */}
           <div className="space-y-4">
             <Link to="/" className="flex items-center space-x-2">
-              <ShieldCheck className="text-blue-600 w-8 h-8" />
-              <span className="text-2xl font-bold text-foreground">JanSahay</span>
+              <img src='https://res.cloudinary.com/dsdcta1sr/image/upload/v1749967567/android-chrome-192x192_b3owbf.png' className="text-blue-600 w-8 h-8" />               <span className="text-2xl font-bold text-foreground">JanSahay</span>
             </Link>
             <p className="text-muted-foreground">
               Empowering citizens to build better communities, together.
