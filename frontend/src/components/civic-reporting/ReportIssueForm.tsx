@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -25,8 +21,6 @@ export const ReportIssueForm = () => {
   const [imageUrl, setImageUrl] = useState<string | null>(null);
 
   const navigate = useNavigate();
-<<<<<<< HEAD
-=======
   
   const handleUseMyLocation = () => {
     toast.loading("Fetching your location...");
@@ -58,7 +52,6 @@ export const ReportIssueForm = () => {
       toast.error("Geolocation is not supported by this browser.");
     }
   };
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0]) {
@@ -73,20 +66,12 @@ export const ReportIssueForm = () => {
     }
   };
 
-<<<<<<< HEAD
-  const handleSubmit = (event: React.FormEvent) => {
-=======
   const handleSubmit = async (event: React.FormEvent) => {
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
     event.preventDefault();
     if (!issueType || !description || !location) {
       toast.error("Please fill all required fields: Issue Type, Description, and Location.");
       return;
     }
-<<<<<<< HEAD
-
-    // Save issue with only text location, no lat/lng or map needed
-=======
     
     toast.loading("Finding location coordinates...");
     let newLat: number | null = null;
@@ -109,18 +94,12 @@ export const ReportIssueForm = () => {
       toast.error("Failed to fetch location data. Submitting without a map pin.");
     }
 
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
     const newIssue = {
       id: Date.now(),
       title: issueType.charAt(0).toUpperCase() + issueType.slice(1).replace(/([A-Z])/g, ' $1').trim(),
       location: location,
-<<<<<<< HEAD
-      lat: null,
-      lng: null,
-=======
       lat: newLat,
       lng: newLng,
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
       status: 'pending',
       priority: priority,
       type: issueType,
@@ -143,12 +122,8 @@ export const ReportIssueForm = () => {
     setImageUrl(null);
 
     setTimeout(() => {
-<<<<<<< HEAD
-      navigate('/issue-map', { state: { centerOn: undefined } });
-=======
       const centerCoordinates = (newLat && newLng) ? [newLat, newLng] : undefined;
       navigate('/issue-map', { state: { centerOn: centerCoordinates } });
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
     }, 1500);
   };
 
@@ -188,19 +163,11 @@ export const ReportIssueForm = () => {
             <Label className="mb-2 block">Location</Label>
             <div className="flex gap-2">
               <Input
-<<<<<<< HEAD
-                placeholder="Enter location"
-                value={location}
-                onChange={(e) => setLocation(e.target.value)}
-              />
-              <Button variant="outline" size="icon" type="button" title="Suggest using your current location" disabled>
-=======
                 placeholder="Enter address or city"
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
               <Button variant="outline" size="icon" type="button" title="Use my current location" onClick={handleUseMyLocation}>
->>>>>>> 32a41b0bf7b1bd0e5ffcf0073c25cdf21f9c2402
                 <MapPin className="h-4 w-4" />
               </Button>
             </div>
