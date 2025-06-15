@@ -51,7 +51,7 @@ graph LR
     Tailwind-->shadcn/ui
     React-Leaflet-->MapComponents
     GSAP-->Animations
-    Cloudinayr-> Image Persistence
+    Cloudinary-->ImagePersistence
 ```
 
 ### Core Dependencies
