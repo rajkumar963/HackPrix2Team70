@@ -1,7 +1,7 @@
 
 # JanSahay: Community Civic Engagement Platform 🏘️
 
-![JanSahay Banner](https://res.cloudinary.com/dsdcta1sr/image/upload/v1749967567/android-chrome-192x192_b3owbf.png) <!-- Replace with actual screenshot -->
+![JanSahay Banner](https://res.cloudinary.com/dsdcta1sr/image/upload/v1749978373/JSH_hwrotn.png) <!-- Replace with actual screenshot -->
 
 A citizen-powered platform for reporting and resolving local civic issues, fostering community engagement and government accountability.
 
@@ -53,6 +53,7 @@ graph LR
     GSAP-->Animations
     Cloudinary-->ImagePersistence
 ```
+
 
 ### Core Dependencies
 | Package | Version | Purpose |
