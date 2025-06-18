@@ -1,5 +1,5 @@
 
-# JanSahay: Community Civic Engagement Platform 🏘️
+# JanSahay : Community Civic Engagement Platform 🏘️
 
 ![JanSahay Banner](https://res.cloudinary.com/dsdcta1sr/image/upload/v1749978373/JSH_hwrotn.png) <!-- Replace with actual screenshot -->
 
