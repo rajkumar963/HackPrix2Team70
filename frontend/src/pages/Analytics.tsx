@@ -102,7 +102,7 @@ const Analytics = () => {
         <div className="flex flex-col md:flex-row md:items-center md:justify-between">
           <div>
             <h1 className="text-4xl font-bold text-foreground mb-2">Analytics</h1>
-            <p className="text-muted-foreground">Track your impact and community engagement metrics</p>
+            <p className="text-muted-foreground">Track your impact and community engagement through metrics</p>
           </div>
           <div className="flex gap-3 mt-4 md:mt-0">
             <Button
